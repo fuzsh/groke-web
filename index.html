@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description"
+          content="GROKE is a vision-free, training-free hierarchical LLM framework that evaluates the navigability of natural language navigation instructions by reasoning over OpenStreetMap graphs.">
+    <meta property="og:title"
+          content="GROKE: Vision-Free Navigation Instruction Evaluation via Graph Reasoning on OpenStreetMap"/>
+    <meta property="og:description"
+          content="GROKE is a vision-free, training-free hierarchical LLM framework that evaluates the navigability of natural language navigation instructions by reasoning over OpenStreetMap graphs."/>
+    <meta property="og:url" content="https://fuzsh.github.io/groke/"/>
+    <meta property="og:image" content="static/images/og-image.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="500"/>
+
+    <meta name="twitter:title"
+          content="GROKE: Vision-Free Navigation Instruction Evaluation via Graph Reasoning on OpenStreetMap">
+    <meta name="twitter:description"
+          content="GROKE is a vision-free, training-free hierarchical LLM framework that evaluates the navigability of natural language navigation instructions by reasoning over OpenStreetMap graphs.">
+    <meta name="twitter:image" content="static/images/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="keywords"
+          content="Vision-and-Language Navigation, VLN, Navigation Instruction Evaluation, OpenStreetMap, OSM, Graph Reasoning, LLM, Agent-as-Judge, Map2Seq, GROKE">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>GROKE: Vision-Free Navigation Instruction Evaluation via Graph Reasoning on OpenStreetMap</title>
+    <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="static/css/bulma.min.css">
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="static/css/index.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+    <script defer src="static/js/fontawesome.all.min.js"></script>
+    <script src="static/js/bulma-carousel.min.js"></script>
+    <script src="static/js/bulma-slider.min.js"></script>
+    <script src="static/js/index.js"></script>
+    <script type="text/javascript" async
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body>
+
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered">
+                <div class="column has-text-centered">
+                    <div style="margin-bottom: 1rem;">
+                        <img src="static/images/Groke.png" alt="GROKE Logo" style="max-height: 120px; max-width: 100%;">
+                    </div>
+                    <h1 class="title is-1 publication-title">GROKE: Vision-Free Navigation Instruction Evaluation via Graph Reasoning on OpenStreetMap</h1>
+                    <div class="is-size-5 publication-authors" style="margin-bottom: 0.5rem;">
+                        <span class="tag is-success is-medium" style="font-weight: 600;">&#127881; Accepted to ACL 2026 Main Conference</span>
+                    </div>
+                    <div class="is-size-5 publication-authors">
+                        <span class="author-block">
+                            <a href="mailto:farzad.shami@aalto.fi" target="_blank">Farzad Shami</a><sup>1</sup>,</span>
+                        <span class="author-block">
+                            <a href="mailto:subhrasankha.dey@aalto.fi" target="_blank">Subhrasankha Dey</a><sup>1</sup>,</span>
+                        <span class="author-block">
+                            <a href="mailto:nico.vandeweghe@ugent.be" target="_blank">Nico Van de Weghe</a><sup>2</sup>,</span>
+                        <span class="author-block">
+                            <a href="mailto:henrikki.tenkanen@aalto.fi" target="_blank">Henrikki Tenkanen</a><sup>1</sup></span>
+                    </div>
+
+                    <div class="is-size-5 publication-authors">
+                        <span class="author-block"><sup>1</sup> Aalto University &nbsp;&middot;&nbsp; <sup>2</sup> Ghent University</span>
+                    </div>
+
+                    <div class="column has-text-centered">
+                        <div class="publication-links">
+                            <!-- Paper PDF -->
+                            <span class="link-block">
+                                <a href="static/pdf/GROKE.pdf" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </span>
+                                    <span>Paper</span>
+                                </a>
+                            </span>
+                            <!-- arXiv -->
+                            <span class="link-block">
+                                <a href="https://arxiv.org/abs/2601.07375" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <i class="ai ai-arxiv"></i>
+                                    </span>
+                                    <span>arXiv</span>
+                                </a>
+                            </span>
+                            <!-- Code -->
+                            <span class="link-block">
+                                <a href="https://anonymous.4open.science/r/groke" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <i class="fab fa-github"></i>
+                                    </span>
+                                    <span>Code</span>
+                                </a>
+                            </span>
+                            <!-- Dataset (Map2Seq) -->
+                            <span class="link-block">
+                                <a href="https://map2seq.schumann.pub/dataset/" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <i class="fas fa-database"></i>
+                                    </span>
+                                    <span>Map2Seq Dataset</span>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Abstract -->
+<section class="hero teaser">
+    <div class="container is-max-desktop">
+        <div class="hero-body">
+            <h2 class="subtitle has-text-justified">
+                <b>Abstract:</b> The evaluation of navigation instructions remains a persistent challenge in Vision-and-Language Navigation (VLN). Reference-based metrics such as BLEU and ROUGE fail to capture the functional utility of spatial directives&mdash;whether an instruction successfully guides a navigator to the intended destination. Existing VLN agents could serve as evaluators, but their reliance on high-fidelity visual simulators introduces licensing constraints, computational cost, and perception errors that confound linguistic quality assessment. We introduce <b>GROKE</b> (<b>G</b>raph-based <b>R</b>easoning over <b>O</b>SM <b>K</b>nowledge for instruction <b>E</b>valuation), a vision-free, training-free, hierarchical LLM-based framework for evaluating navigation instructions using OpenStreetMap data. Through systematic ablation studies, we show that structured JSON and textual representations of spatial information substantially outperform grid-based and visual graph encodings. Our hierarchical architecture combines sub-instruction planning with topological graph navigation, reducing navigation error by <b>68.5%</b> compared to heuristic and sampling baselines on the Map2Seq dataset. The agent's execution success, trajectory fidelity, and decision patterns serve as proxy metrics for the functional navigability of instructions given OSM-visible landmarks and topology, establishing a scalable and interpretable evaluation paradigm without visual dependencies.
+            </h2>
+        </div>
+    </div>
+</section>
+<!-- End Abstract -->
+
+
+<!-- Task & Motivation -->
+<section class="section hero is-light">
+    <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Task &amp; Motivation</h2>
+                <div class="content has-text-justified">
+                    <p>
+                        Most evaluation pipelines for navigation instructions still rely on reference-based text metrics borrowed from machine translation and captioning &mdash; BLEU, ROUGE, METEOR, CIDEr. These metrics assume that there is a single correct way to describe a route and that lexical similarity correlates with functional utility. In navigation, this assumption breaks down: <i>"Turn left at the bank"</i> and <i>"Turn right at the bank"</i> share almost all of their tokens yet describe opposite trajectories, while <i>"Go past the drug store and turn left"</i> and <i>"Take a left before the light on your right"</i> can share zero n-grams while describing the same valid action.
+                    </p>
+                    <p>
+                        Pragmatic alternatives evaluate instructions by sending a follower agent through a high-fidelity visual simulator (Matterport3D, Google Street View) and measuring its success rate. This conflates linguistic quality with visual recognition, hits the licensing and bandwidth ceiling of proprietary panoramas, and limits reproducibility to well-funded labs.
+                    </p>
+                    <p>
+                        <b>GROKE inverts the standard VLN question.</b> Instead of asking <i>"how well did the agent perform?"</i>, we ask <i>"how navigable is this instruction?"</i> &mdash; and treat agent execution metrics (Navigation Error, Success Rate, SDTW) as proxy scores for the input text. By replacing pixels with OpenStreetMap graphs (nodes, edges, POIs), GROKE removes the visual recognition bottleneck and enables scalable, vision-free assessment of instruction quality.
+                    </p>
+                    <figure class="image">
+                        <img src="static/images/comparison.png" alt="Comparison of traditional textual metrics and proposed pragmatic evaluation metrics.">
+                        <figcaption>Figure 1: Comparison of traditional textual metrics and the proposed pragmatic evaluation metrics.</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Task & Motivation -->
+
+
+<!-- Method -->
+<section class="section">
+    <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Method</h2>
+                <div class="content has-text-justified">
+                    <p>
+                        We formulate VLN over OpenStreetMap as sequential decision-making on a graph
+                        \(\mathcal{G} = (V, E, P)\), where \(V\) is the set of navigable nodes, \(E\) the directed edges with associated headings, and \(P\) the points of interest with semantic tags. Given an instruction \(I\), the goal is a policy
+                        \(\pi: (I, v_t, h_t, \mathcal{G}_t) \rightarrow v_{t+1}\)
+                        that selects the next waypoint from the local map context.
+                    </p>
+                    <p>
+                        GROKE is a training-free, multi-agent hierarchical system composed of three modules:
+                    </p>
+                    <ul>
+                        <li><b>Sub-Goal &amp; POI Extraction.</b> An LLM parser decomposes the instruction into atomic sub-goals (<code>MOVE_FORWARD</code>, <code>TURN_LEFT</code>, <code>TURN_RIGHT</code>) and extracts landmark mentions, which are grounded onto OSM POIs via fuzzy string matching (RapidFuzz).</li>
+                        <li><b>Visible Area Construction.</b> Starting from the current node and heading, we traverse forward to the next intersections, modelling the human "line of sight" along the street. The result is a structured local graph annotated with POI proximity and relative direction (Forward / Left / Right / Back).</li>
+                        <li><b>Navigator Agent.</b> Given the current sub-goal, position, heading, and the structured visible area (encoded as JSON), the agent selects the next waypoint and updates the sub-goal status (<code>IN_PROGRESS</code>, <code>COMPLETED</code>).</li>
+                    </ul>
+                    <figure class="image">
+                        <img src="static/images/overall_architecture.png" alt="GROKE overall architecture: Sub-Goal &amp; POI Extraction, Visible Area Construction, and Navigator Agent.">
+                        <figcaption>Figure 2: Overall GROKE architecture &mdash; Sub-Goal &amp; POI Extraction, Visible Area Construction, and Navigator Agent.</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Method -->
+
+
+<!-- Contributions -->
+<section class="section hero is-light">
+    <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Contributions</h2>
+                <div class="content has-text-justified">
+                    <ol>
+                        <li><b>Spatial representation study.</b> GROKE systematically compares four spatial encodings &mdash; Textual narratives, Structured JSON, Graphviz-style notation, and Grid matrices &mdash; and shows that structured JSON dominates, achieving Navigation Error of 41.3 m and Success Rate of 74.0% on the validation slice.</li>
+                        <li><b>Agent-as-Judge formalisation.</b> We frame instruction evaluation as agentic execution and provide an experimental protocol that validates the judge itself by correlating its metrics with human navigability ratings.</li>
+                        <li><b>Open implementation.</b> We release a detailed implementation of the framework, including graph serialisation algorithms, prompt-engineering strategies for hierarchical reasoning, and statistical analyses of agent trajectories.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Contributions -->
+
+
+<!-- Experimental Results -->
+<section class="section">
+    <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Experimental Results</h2>
+                <div class="content has-text-justified">
+                    <p>
+                        We evaluate GROKE on two 700-instance test splits of <a href="https://map2seq.schumann.pub/" target="_blank">Map2Seq</a> (Test<sub>A</sub> and Test<sub>B</sub>, corresponding to the Test_Seen and Test_Unseen splits of the original release). Following standard VLN protocols we report Navigation Error (NE), Success Rate (SR), Oracle Success Rate (OSR), and Success weighted by Dynamic Time Warping (SDTW). The Navigator Agent runs on Gemini-3 Pro with the default thinking configuration.
+                    </p>
+                    <div class="table-container">
+                        <table class="table is-striped is-fullwidth is-narrow">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">Method</th>
+                                    <th colspan="4" class="has-text-centered">Test<sub>A</sub></th>
+                                    <th colspan="4" class="has-text-centered">Test<sub>B</sub></th>
+                                </tr>
+                                <tr>
+                                    <th>NE&nbsp;&darr;</th><th>SR&nbsp;&uarr;</th><th>OSR&nbsp;&uarr;</th><th>SDTW&nbsp;&uarr;</th>
+                                    <th>NE&nbsp;&darr;</th><th>SR&nbsp;&uarr;</th><th>OSR&nbsp;&uarr;</th><th>SDTW&nbsp;&uarr;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Random Walker</td>
+                                    <td>259.0</td><td>4.4%</td><td>5.7%</td><td>0.026</td>
+                                    <td>244.3</td><td>6.1%</td><td>7.1%</td><td>0.029</td>
+                                </tr>
+                                <tr>
+                                    <td>Action Sampling</td>
+                                    <td>250.1</td><td>5.1%</td><td>6.0%</td><td>0.037</td>
+                                    <td>241.6</td><td>7.4%</td><td>8.1%</td><td>0.039</td>
+                                </tr>
+                                <tr>
+                                    <td>Heuristic Agent</td>
+                                    <td><u>180.6</u></td><td><u>18.0%</u></td><td><u>18.9%</u></td><td><u>0.155</u></td>
+                                    <td><u>173.0</u></td><td><u>17.9%</u></td><td><u>19.1%</u></td><td><u>0.159</u></td>
+                                </tr>
+                                <tr>
+                                    <td><b>GROKE (Ours)</b></td>
+                                    <td><b>56.8</b></td><td><b>66.4%</b></td><td><b>78.4%</b></td><td><b>0.634</b></td>
+                                    <td><b>59.8</b></td><td><b>63.3%</b></td><td><b>78.0%</b></td><td><b>0.609</b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="is-size-7 has-text-centered">
+                        Table 1: Overall navigation execution results. The best baseline per column is underlined.
+                    </p>
+                    <p>
+                        GROKE reduces Navigation Error by roughly <b>68.5%</b> compared with the strongest baseline (Heuristic Agent) and lifts Success Rate from 18.0% to 66.4% on Test<sub>A</sub>. The gains transfer to the unseen split (Test<sub>B</sub>: SR 17.9% &rarr; 63.3%), confirming that semantic graph reasoning generalises beyond the training distribution.
+                    </p>
+                    <h4 class="title is-5">Correlation with human navigability judgments</h4>
+                    <p>
+                        On 100 randomly sampled instructions rated by human annotators, Navigation Error shows the strongest agreement with human ratings (Pearson <i>r</i> = &minus;0.31, <i>p</i> &lt; 0.01; Spearman <i>&rho;</i> = &minus;0.32, <i>p</i> &lt; 0.01). SR, SDTW, and nDTW are also significantly correlated; OSR alone fails to reach significance. These results support using NE and nDTW as primary proxies when human-in-the-loop validation is infeasible.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Experimental Results -->
+
+
+<!-- Ablation Studies -->
+<section class="section hero is-light">
+    <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Ablation Studies</h2>
+                <div class="content has-text-justified">
+                    <h4 class="title is-5">1. Spatial representation matters</h4>
+                    <p>
+                        We compare four ways of feeding the visible area to the LLM: a Textual narrative, a Structured JSON graph, Graphviz-style notation, and a Grid (matrix) rendering. Structured JSON and Textual encodings clearly outperform the visual-style formats; the Grid representation collapses to near-baseline performance (NE 175.4 m, SR 10%). On hard instructions JSON pulls further ahead of Textual, suggesting that hierarchical structure helps the LLM recover from compounding errors.
+                    </p>
+                    <figure class="image">
+                        <img src="static/images/sir_performace.png" alt="Overall performance comparison across spatial information representation formats.">
+                        <figcaption>Figure 4: Overall performance across spatial-information representations.</figcaption>
+                    </figure>
+
+                    <h4 class="title is-5">2. Sub-instruction decomposition is essential</h4>
+                    <p>
+                        We compare three instruction-feeding strategies: complete instruction, rule-based sentence split, and our LLM Divider that produces semantically grounded atomic sub-goals. The LLM Divider reduces NE by 42.6% relative to the complete-instruction baseline (41.3 m vs. 71.9 m) and raises SR from 51.0% to 74.0%. The advantage is largest on hard instructions, where SR jumps from 23.1% to 53.8%.
+                    </p>
+                    <div class="table-container">
+                        <table class="table is-striped is-fullwidth is-narrow">
+                            <thead>
+                                <tr>
+                                    <th>Method</th>
+                                    <th>NE&nbsp;&darr;</th><th>SR&nbsp;&uarr;</th><th>OSR&nbsp;&uarr;</th><th>nDTW&nbsp;&uarr;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Complete Instruction</td><td>71.9</td><td>51.0%</td><td>55.0%</td><td>0.496</td></tr>
+                                <tr><td>Rule-based Split</td><td>58.4</td><td>54.0%</td><td>69.0%</td><td>0.509</td></tr>
+                                <tr><td><b>LLM Divider (Ours)</b></td><td><b>41.3</b></td><td><b>74.0%</b></td><td><b>82.0%</b></td><td><b>0.714</b></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="is-size-7 has-text-centered">
+                        Table 2: Impact of sub-instruction decomposition (100 validation instances).
+                    </p>
+
+                    <h4 class="title is-5">3. Thinking budget vs. cost</h4>
+                    <p>
+                        Higher thinking budgets help on hard instructions but follow a clear law of diminishing returns. The Low setting consumes ~33k tokens on average, High ~41k, and Auto ~44k. Each additional metre of NE reduction costs roughly 1,334 thought tokens (~1.6&cent; at $12 / M tokens), and a 0.01 increase in nDTW costs ~1,731 tokens.
+                    </p>
+                    <figure class="image">
+                        <img src="static/images/marginal_cost_with_cents.png" alt="Marginal cost of performance improvements measured in thought tokens and cents.">
+                        <figcaption>Figure 5: Marginal cost of performance improvements across navigation metrics.</figcaption>
+                    </figure>
+
+                    <h4 class="title is-5">Case study</h4>
+                    <p>
+                        A common failure pattern is overshooting the goal: when a landmark (e.g. a bus stop) is mentioned as a stopping reference, the agent occasionally treats it as a navigation destination and walks past the intended stopping intersection.
+                    </p>
+                    <figure class="image">
+                        <img src="static/images/case_study.png" alt="Case study: agent overshoots the goal by misinterpreting a bus-stop landmark as the destination.">
+                        <figcaption>Figure 6: Failure case &mdash; the agent overshoots the goal because it interprets the bus-stop landmark as the destination rather than a reference for the stopping location.</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Ablation Studies -->
+
+
+<!--BibTex citation -->
+<section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+        <h2 class="title">BibTeX</h2>
+        <pre><code>@misc{shami2026grokevisionfreenavigationinstruction,
+      title={GROKE: Vision-Free Navigation Instruction Evaluation via Graph Reasoning on OpenStreetMap},
+      author={Farzad Shami and Subhrasankha Dey and Nico Van de Weghe and Henrikki Tenkanen},
+      year={2026},
+      eprint={2601.07375},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2601.07375},
+}</code></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-8">
+                <div class="content">
+
+                    <p>
+                        This website is adapted from <a href="https://nerfies.github.io" target="_blank">Nerfies</a>,
+                        licensed under a <a rel="license"
+                                            href="http://creativecommons.org/licenses/by-sa/4.0/"
+                                            target="_blank">Creative Commons Attribution-ShareAlike 4.0 International
+                        License</a>.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>
